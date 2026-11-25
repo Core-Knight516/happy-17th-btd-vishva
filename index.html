@@ -263,9 +263,9 @@
     .mood-card { background: #fff0f5; border: 2px dashed #ffb6c1; border-radius: 18px; padding: 12px; cursor: pointer; }
     .mood-card img { width: 85px; height: 85px; object-fit: contain; }
     .mood-roast-box { margin-top: 16px; padding: 14px; border-radius: 14px; background: #4a1525; color: #fff; font-size: 14px; font-weight: 600; display: none; }
-    .date-columns { display: grid; grid-template-columns: 1fr 1.3fr; gap: 12px; margin-top: 15px; }
-    .date-col { display: flex; flex-direction: column; gap: 12px; }
-    .match-item { background: #fff; border: 2px solid #e6d3a8; border-radius: 14px; padding: 12px 8px; font-size: 13px; font-weight: 700; color: #4a1525; cursor: pointer; min-height: 52px; display: flex; align-items: center; justify-content: center; }
+    .date-columns { display: grid; grid-template-columns: 1fr 1.35fr; gap: 10px; margin-top: 15px; }
+    .date-col { display: flex; flex-direction: column; gap: 10px; }
+    .match-item { background: #fff; border: 2px solid #e6d3a8; border-radius: 14px; padding: 10px 6px; font-size: 12px; font-weight: 700; color: #4a1525; cursor: pointer; min-height: 46px; display: flex; align-items: center; justify-content: center; line-height: 1.25; }
     .match-item.selected { border-color: #c91c5c; background: #ffe4ec; transform: scale(1.03); }
     .match-item.matched { border-color: #2e7d32; background: #e8f5e9; color: #1b5e20; pointer-events: none; opacity: 0.85; }
     .sassy-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(40,40,45,0.88); backdrop-filter: blur(4px); z-index: 100000; display: none; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
@@ -434,6 +434,16 @@
     .globe-hud { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 20; background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); padding: 10px 22px; border-radius: 25px; font-size: 13px; letter-spacing: 1px; color: #e4e4e7; border: 1px solid rgba(255,255,255,0.15); pointer-events: none; white-space: nowrap; }
 
     .next-action { padding: 13px 32px; background: #c91c5c; color: white; border: none; border-radius: 25px; font-family: 'Fredoka', sans-serif; font-size: 17px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,0.35); z-index: 50; }
+
+    /* Keep faces framed cleanly without cutting off heads */
+    .s1-photo-frame img,
+    .polaroid img,
+    .ice-photo,
+    .ribbon-card img,
+    .drag-polaroid img,
+    .globe-card img {
+        object-position: center 20%;
+    }
 </style>
 </head>
 <body>
@@ -642,11 +652,11 @@
                 <div id="date-win-msg" style="margin-top:15px; font-family:'Fredoka', sans-serif; color:#2e7d32; display:none;">YAY! You remembered everything! 💖</div>
             </div>
 
-            <!-- Frozen Secret Photo (P2.jpg) -->
+            <!-- Frozen Secret Photo (P2.png) -->
             <div class="ice-section">
                 <h2 class="section-title" style="font-size:36px;">One Last Secret... ❄️</h2>
                 <div class="ice-frame" id="ice-frame">
-                    <img src="P2.jpg" class="ice-photo" alt="First Secret Meet" onerror="this.src='1.jpeg'">
+                    <img src="P2.png" class="ice-photo" alt="First Secret Meet" onerror="this.src='1.jpeg'">
                     <div class="ice-overlay" id="ice-overlay">
                         <div class="heat-ring" id="heat-ring"></div>
                         <div style="font-size:44px; margin-bottom:8px; pointer-events:none; z-index:5;">☝️</div>
@@ -1144,12 +1154,15 @@
         box.innerText = moodRoasts[i]; box.style.display = 'block';
     }
 
-    // Date Match
+    // Date Match (Updated with your 7 real dates)
     var datePairs = [
-        { id: 1, date: "Date 1", incident: "Our first secret meet 🤫" },
-        { id: 2, date: "Date 2", incident: "That crazy long hug 🫂" },
-        { id: 3, date: "Date 3", incident: "Our first kiss 💋" },
-        { id: 4, date: "16 May", incident: "The day my fav person was born 🎂" }
+        { id: 1, date: "01/08/26", incident: "Our seminar chat 💬" },
+        { id: 2, date: "27/08/26", incident: "The day I confessed 💌" },
+        { id: 3, date: "13/09/26", incident: "Started talking online 📱" },
+        { id: 4, date: "17/10/26", incident: "First hug 🫂" },
+        { id: 5, date: "22/10/26", incident: "First tight hug 🤍" },
+        { id: 6, date: "27/10/26", incident: "First kiss 💋" },
+        { id: 7, date: "12/11/26", incident: "First french kiss ❤️‍🔥" }
     ];
     var selDateId = null, selDateEl = null, matchedCount = 0;
     (function initDateGame() {
@@ -1211,7 +1224,7 @@
     document.addEventListener('mouseup', stopMelting);
     document.addEventListener('touchend', stopMelting);
 
-    // --- SCREEN 6: GROWING-UP B&W RIBBON ---
+    // --- SCREEN 6: GROWING-UP B&W RIBBON (G1.png - G8.png) ---
     var ribbonStarted = false, ribbonX = 0, ribbonSpeed = 1.1;
     function startRibbonAnimation() {
         if (ribbonStarted) return;
@@ -1249,7 +1262,7 @@
         requestAnimationFrame(loopRibbon);
     }
 
-    // --- SCREEN 7: BUTTERFLY & DRAGGABLE POLAROID BOARD ---
+    // --- SCREEN 7: BUTTERFLY & DRAGGABLE POLAROID BOARD (U1.png - U6.png) ---
     var boardInit = false;
     var butterflyNotes = [
         "Every butterfly escapes... except me. I've been happily stuck with you since day one. 🤍",
@@ -1414,7 +1427,7 @@
             });
         }
 
-        // 18 Photo Cards placed all around the 360° inner sphere
+        // 18 Photo Cards placed all around the 360° inner sphere (U1.png - U6.png)
         var basePhotos = [
             { img: 'U1.png', cap: 'Cutie' },
             { img: 'U2.png', cap: 'Beauty' },
@@ -1589,4 +1602,4 @@
     }
 </script>
 </body>
-</html>S
+</html>
